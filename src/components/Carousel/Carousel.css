@@ -1,9 +1,8 @@
 .slider{
-    margin-top: 4rem;
+    margin-top: 2rem;
+    margin-bottom: 5rem;
 }
-
 .slider p{
     font-size: 15px;
-    align-items: center;
     margin-top: 0.5rem;
 }
