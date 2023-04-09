@@ -15,6 +15,11 @@ const Banner = () => {
     visible: { y: 0 },
   };
 
+  const handleVideoLoad = (event) => {
+    // Set playback speed to 2X
+    event.target.playbackRate = 2;
+  };
+
   return (
     <Container fluid className="p-0">
       <motion.video
@@ -24,12 +29,14 @@ const Banner = () => {
         muted
         playsInline
         className="banner-video"
+        preload="auto"
+        onLoadedData={handleVideoLoad} // Call handleVideoLoad when video is loaded
       />
       <Container className="banner-overlay">
         <Row>
           <Col>
             <motion.h1
-              style={{ marginTop: '2rem' }}
+              style={{ marginTop: '2rem', color: "#f0c940" }}
               className="text-center"
               variants={slideUp}
               initial="hidden"

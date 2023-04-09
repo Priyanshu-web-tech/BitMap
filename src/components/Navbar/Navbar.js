@@ -6,12 +6,13 @@ import Container from "react-bootstrap/Container";
 
 const NavbarComponent = () => {
   return (
+
     <motion.nav
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <Navbar variant="dark">
+      <Navbar variant="dark" >
         <Container>
           <Navbar.Brand style={{ padding: "1rem", fontSize: "40px" }}>
             <Link to="/" style={{ textDecoration: "none" }}>
@@ -35,8 +36,7 @@ const NavbarComponent = () => {
             <Navbar.Text>
               <motion.span
                 style={{
-                  fontSize: "30px",
-                  fontStyle: "italic",
+                  fontSize: "20px",
                   color: "#f0c940",
                 }}
                 initial={{ opacity: 0 }}
@@ -50,6 +50,7 @@ const NavbarComponent = () => {
         </Container>
       </Navbar>
     </motion.nav>
+
   );
 };
 

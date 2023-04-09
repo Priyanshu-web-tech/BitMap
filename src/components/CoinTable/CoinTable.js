@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import Pagination from "react-bootstrap/Pagination";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import "./CoinTable.css";
+import { Link } from "react-router-dom";
 const CoinTable = () => {
   const [rows, setRows] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,11 +33,8 @@ const CoinTable = () => {
           setRows(formattedRows);
           setLastFetchedTime(currentTime);
           setIsLoading(false); // Set isLoading to false after data is fetched
-        }
-        else{
+        } else {
           setIsLoading(false); // Set isLoading to false on fetch error
-
-
         }
       } catch (error) {
         console.error("Failed to fetch data:", error);
@@ -64,59 +62,84 @@ const CoinTable = () => {
 
   return (
     <div className="table-responsive">
-      <h1 style={{ textAlign: "center", marginBottom: "2rem" }}>
+      <h1
+        style={{ textAlign: "center", marginBottom: "2rem", color: "#f0c940" }}
+      >
         CryptoCurrency Prices
       </h1>
       <div className="d-flex justify-content-center">
-      <>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <Table striped bordered hover variant="dark" style={{ width: "80%" }}>
-          <thead>
-            <tr>
-              {columns.map((column) => (
-                <th
-                  key={column.field}
-                  style={{
-                    border: "none",
-                    backgroundColor: "#2b752b",
-                    color: "white",
-                  }}
-                >
-                  {column.headerName}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {currentItems.map((row) => (
-              <tr key={row.id}>
-                <td style={{ border: "none" }}>
-                  <img src={row.img} alt={row.name} height="40" />
-                  &nbsp;&nbsp;{row.symbol.toUpperCase()}
-                </td>
-                <td style={{ border: "none" }}>{row.name}</td>
-                <td
-                  style={{
-                    border: "none",
-                    color: row.change24h < 0 ? "red" : "#2b752b",
-                  }}
-                >
-                  {row.change24h}%
-                  {row.change24h < 0 ? <>&#9660;</> : <>&#9650;</>}
-                </td>
-                <td style={{ border: "none" }}>₹{row.price}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      )}
-    </>
+        <>
+          {isLoading ? (
+            <p>Loading...</p>
+          ) : (
+            <Table
+              striped
+              bordered
+              hover
+              variant="dark"
+              style={{ width: "80%" }}
+              className="table-sm"
+            >
+              <thead>
+                <tr className="col-sm-3 text-center">
+                  {columns.map((column) => (
+                    <th
+                      key={column.field}
+                      style={{
+                        border: "none",
+                        backgroundColor: "#2b752b",
+                        color: "white",
+                      }}
+                    >
+                      {column.headerName}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {currentItems.map((row) => (
+                  <tr key={row.id}>
+                    <td
+                      className="col-sm-3 text-center"
+                      style={{ border: "none", color: "#2b752b" }}
+                    >
+                      <Link to={`/coin/${row.id}`} style={{ textDecoration: "none" }}>
+                        <img src={row.img} alt={row.name} height="40" />
+                      </Link>
+                      &nbsp;&nbsp;{row.symbol.toUpperCase()}
+                    </td>
+                    <td
+                      className="col-sm-3 text-center"
+                      style={{ border: "none" }}
+                    >
+                      {row.name}
+                    </td>
+                    <td
+                      className="col-sm-3 text-center"
+                      style={{
+                        border: "none",
+                        color: row.change24h < 0 ? "red" : "#2b752b",
+                      }}
+                    >
+                      {row.change24h}%
+                      {row.change24h < 0 ? <>&#9660;</> : <>&#9650;</>}
+                    </td>
+                    <td
+                      className="col-sm-3 text-center"
+                      style={{ border: "none" }}
+                    >
+                      ₹{row.price}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          )}
+        </>
       </div>
 
       <div className="d-flex justify-content-center ">
-        <Pagination>
+        <Pagination className="pagination-dark">
           {Array.from({ length: Math.ceil(rows.length / itemsPerPage) }).map(
             (_, index) => (
               <Pagination.Item
