@@ -5,7 +5,6 @@ import Col from "react-bootstrap/Col";
 import { useParams } from "react-router-dom";
 import CoinChart from "../CoinChart/CoinChart";
 
-
 const Info = () => {
   const { id } = useParams();
   const [coinData, setCoinData] = useState(null);
@@ -16,8 +15,7 @@ const Info = () => {
       .then((data) => setCoinData(data))
       .catch((error) => console.error("Error fetching coin data:", error));
   }, [id]);
-  
- 
+
   if (!coinData) {
     return <div>Loading...</div>;
   }
@@ -49,13 +47,18 @@ const Info = () => {
       <br />
       <Container>
         <Row>
+        <Col sm={7}>
+            <CoinChart />
+          </Col>
           <Col
             sm={5}
             className="text-center"
-            style={{ borderRight: "1px solid #ccc" }}
+            style={{ borderLeft: "1px solid #ccc" }}
           >
+
+<h1>{name}</h1>
             <img width={"30%"} src={image.large} alt={name} />
-            <h1>{name}</h1>
+            
             <p>
               <strong>Rank:</strong> {market_cap_rank}
             </p>
@@ -66,14 +69,14 @@ const Info = () => {
               <strong>Market Cap:</strong> ₹{formatNumber(market_cap.inr)}
             </p>
             <div
-              style={{ color: "gold" }}
+              style={{ color: "gold",fontSize:"22px" }}
               className="my-3"
-              dangerouslySetInnerHTML={{ __html: description.en.split(". ")[0] }}
+              dangerouslySetInnerHTML={{
+                __html: description.en.split(". ")[0],
+              }}
             />
           </Col>
-          <Col sm={7}>
-           <CoinChart/>
-            </Col>
+          
         </Row>
       </Container>
       <br />

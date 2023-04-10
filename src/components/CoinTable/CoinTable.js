@@ -103,10 +103,26 @@ const CoinTable = () => {
                       className="col-sm-3 text-center"
                       style={{ border: "none", color: "#2b752b" }}
                     >
-                      <Link to={`/coin/${row.id}`} style={{ textDecoration: "none" }}>
+                      <Link
+                        to={`/coin/${row.id}`}
+                       
+                      >
                         <img src={row.img} alt={row.name} height="40" />
                       </Link>
-                      &nbsp;&nbsp;{row.symbol.toUpperCase()}
+                      
+                      <br />
+                      <Link
+                        to={`/coin/${row.id}`}
+                        style={{
+                          textDecoration: "none",
+                          color: "#2b752b",
+                          cursor: "pointer",
+                          background:"transparent"
+                        }}
+                      >
+                        View Details
+                      </Link>
+                      
                     </td>
                     <td
                       className="col-sm-3 text-center"
