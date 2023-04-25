@@ -1,63 +1,53 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import bg from '../../assets/bg.mp4';
 import './Banner.css';
-import { Container, Row, Col } from 'react-bootstrap';
+import { motion } from 'framer-motion';
 
 const Banner = () => {
-  const fadeIn = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1 },
+  const bannerVariants = {
+    initial: {
+      opacity: 0,
+      y: -50,
+    },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: 'easeInOut',
+      },
+    },
   };
 
-  const slideUp = {
-    hidden: { y: 100 },
-    visible: { y: 0 },
-  };
-
-  const handleVideoLoad = (event) => {
-    // Set playback speed to 2X
-    event.target.playbackRate = 2;
+  const textVariants = {
+    initial: {
+      opacity: 0,
+      y: 20,
+    },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: 'easeInOut',
+        delay: 0.3,
+      },
+    },
   };
 
   return (
-    <Container fluid className="p-0">
-      <motion.video
-        src={bg}
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="banner-video"
-        preload="auto"
-        onLoadedData={handleVideoLoad} // Call handleVideoLoad when video is loaded
-      />
-      <Container className="banner-overlay">
-        <Row>
-          <Col>
-            <motion.h1
-              style={{ marginTop: '2rem', color: "#f0c940" }}
-              className="text-center"
-              variants={slideUp}
-              initial="hidden"
-              animate="visible"
-              transition={{ duration: 1 }}
-            >
-              Welcome to the World of Cryptocurrency
-            </motion.h1>
-            <motion.p
-              className="text-center"
-              variants={fadeIn}
-              initial="hidden"
-              animate="visible"
-              transition={{ duration: 1, delay: 0.5 }}
-            >
-              Invest in digital assets and explore decentralized finance (DeFi)
-            </motion.p>
-          </Col>
-        </Row>
-      </Container>
-    </Container>
+    <motion.div
+      className='banner-bg'
+      variants={bannerVariants}
+      initial='initial'
+      animate='animate'
+    >
+      <motion.div className='banner-content'>
+        <motion.h1 variants={textVariants}>Welcome to the world of cryptocurrency</motion.h1>
+        <motion.p variants={textVariants}>
+          Invest in digital assets and explore decentralized finance (DeFi)
+        </motion.p>
+      </motion.div>
+    </motion.div>
   );
 };
 

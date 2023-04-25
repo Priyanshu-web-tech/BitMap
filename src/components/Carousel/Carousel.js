@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/alice-carousel.css";
 import "./Carousel.css";
-import { Container, Row, Col } from "react-bootstrap"; // Import Bootstrap components
 
 const Carousel = () => {
   const [coinData, setCoinData] = useState([]);
@@ -11,7 +10,6 @@ const Carousel = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Check if data was fetched within last 10 minutes
         const currentTime = new Date().getTime();
         if (!lastFetchedTime || currentTime - lastFetchedTime > 600000) {
           const response = await fetch(
@@ -19,7 +17,7 @@ const Carousel = () => {
           );
           const data = await response.json();
           setCoinData(data);
-          setLastFetchedTime(currentTime); // Update last fetched time
+          setLastFetchedTime(currentTime);
         }
       } catch (error) {
         console.error("Failed to fetch data:", error);
@@ -27,11 +25,11 @@ const Carousel = () => {
     };
 
     fetchData();
-  }, [lastFetchedTime]); // Fetch data only when lastFetchedTime changes
+  }, [lastFetchedTime]);
 
   const responsive = {
     0: {
-      items: 2,
+      items: 3,
     },
     512: {
       items: 4,
@@ -39,37 +37,32 @@ const Carousel = () => {
   };
 
   return (
-    <Container>
-      <Row className="justify-content-center">
-        <Col xs={12} sm={12} md={10} lg={8} xl={8}>
-          <div className="slider">
-            {coinData.length === 0 ? (
-              // Display loading message or spinner while data is being fetched
-              <p>Loading...</p>
-            ) : (
-              // Render fetched data
-              <AliceCarousel
-                mouseTracking
-                infinite
-                autoPlayInterval={1000}
-                animationDuration={1500}
-                disableDotsControls
-                disableButtonsControls
-                responsive={responsive}
-                items={coinData.map((coin) => (
-                  <div key={coin.id}>
-                    <img src={coin.image} width={40} alt="" />
-                    <p>{coin.name}</p>
-                    <p>₹{coin.current_price}</p>
-                  </div>
-                ))}
-                autoPlay
-              />
-            )}
-          </div>
-        </Col>
-      </Row>
-    </Container>
+    <div className="cara">
+      <h1>Trending Cryptocurrencies.</h1>
+      <div className="slider">
+        {coinData.length === 0 ? (
+          <p>Loading...</p>
+        ) : (
+          <AliceCarousel
+            mouseTracking
+            infinite
+            autoPlayInterval={1000}
+            animationDuration={1500}
+            disableDotsControls
+            disableButtonsControls
+            autoPlay
+            responsive={responsive}
+            items={coinData.map((coin) => (
+              <div key={coin.id}>
+                <img src={coin.image} width={50} alt="" />
+                <p>{coin.name}</p>
+                <p>₹{coin.current_price}</p>
+              </div>
+            ))}
+          />
+        )}
+      </div>
+    </div>
   );
 };
 
