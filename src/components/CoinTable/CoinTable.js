@@ -4,12 +4,14 @@ import Pagination from "react-bootstrap/Pagination";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./CoinTable.css";
 import { Link } from "react-router-dom";
+
 const CoinTable = () => {
   const [rows, setRows] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const [lastFetchedTime, setLastFetchedTime] = useState(null);
-  const [isLoading, setIsLoading] = useState(true); // Add isLoading state
+  const [isLoading, setIsLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,13 +34,11 @@ const CoinTable = () => {
           }));
           setRows(formattedRows);
           setLastFetchedTime(currentTime);
-          setIsLoading(false); // Set isLoading to false after data is fetched
-        } else {
-          setIsLoading(false); // Set isLoading to false on fetch error
         }
       } catch (error) {
         console.error("Failed to fetch data:", error);
-        setIsLoading(false); // Set isLoading to false on fetch error
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -54,7 +54,14 @@ const CoinTable = () => {
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = rows.slice(indexOfFirstItem, indexOfLastItem);
+
+  const filteredRows = rows.filter(
+    (row) =>
+      row.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      row.symbol.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const currentItems = filteredRows.slice(indexOfFirstItem, indexOfLastItem);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -68,6 +75,24 @@ const CoinTable = () => {
         CryptoCurrency Prices
       </h1>
       <div className="d-flex justify-content-center">
+        <input
+          style={{
+            width: "80%",
+            background: "#333",
+            color: "#fff",
+            border: "none",
+            borderRadius: "5px ",
+            padding: "1rem",
+          }}
+          type="text"
+          placeholder="Search For Your Coin"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="form-control"
+        />
+      </div>
+
+      <div className="d-flex justify-content-center">
         <>
           {isLoading ? (
             <p>Loading...</p>
@@ -78,7 +103,7 @@ const CoinTable = () => {
               hover
               variant="dark"
               style={{ width: "80%" }}
-              className="table-sm"
+              className="table-sm mt-2"
             >
               <thead>
                 <tr className="col-sm-3 text-center">
@@ -103,13 +128,10 @@ const CoinTable = () => {
                       className="col-sm-3 text-center"
                       style={{ border: "none", color: "#2b752b" }}
                     >
-                      <Link
-                        to={`/coin/${row.id}`}
-                       
-                      >
+                      <Link to={`/coin/${row.id}`}>
                         <img src={row.img} alt={row.name} height="40" />
                       </Link>
-                      
+
                       <br />
                       <Link
                         to={`/coin/${row.id}`}
@@ -117,12 +139,11 @@ const CoinTable = () => {
                           textDecoration: "none",
                           color: "#2b752b",
                           cursor: "pointer",
-                          background:"transparent"
+                          background: "transparent",
                         }}
                       >
                         View Details
                       </Link>
-                      
                     </td>
                     <td
                       className="col-sm-3 text-center"
