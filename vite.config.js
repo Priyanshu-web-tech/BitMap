@@ -27,10 +27,20 @@ export default defineConfig({
       workbox: {
         runtimeCaching: [
           {
-            urlPattern: /favicon\.ico$/, // Regular expression for the URL pattern
+            urlPattern: /favicon-32x32\.png$/, // Regular expression for the URL pattern
             handler: "CacheFirst",
             options: {
               cacheName: "favicon",
+              cacheableResponse: {
+                statuses: [0, 200],
+              },
+            },
+          },
+          {
+            urlPattern: /bg-6846ebaa\.png$/, // Regular expression for the URL pattern
+            handler: "CacheFirst",
+            options: {
+              cacheName: "bg",
               cacheableResponse: {
                 statuses: [0, 200],
               },
