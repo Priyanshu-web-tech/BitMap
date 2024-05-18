@@ -15,7 +15,7 @@ const CoinChart = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `/api/v3/coins/${id}/market_chart?vs_currency=INR&days=${getDays(
+          `https://api.coingecko.com/api/v3/coins/${id}/market_chart?vs_currency=INR&days=${getDays(
             selectedOption
           )}`
         );

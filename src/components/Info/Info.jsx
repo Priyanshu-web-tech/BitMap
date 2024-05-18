@@ -10,7 +10,7 @@ const Info = () => {
   const [coinData, setCoinData] = useState(null);
 
   useEffect(() => {
-    fetch(`/api/v3/coins/${id}`)
+    fetch(`https://api.coingecko.com/api/v3/coins/${id}`)
       .then((response) => response.json())
       .then((data) => setCoinData(data))
       .catch((error) => console.error("Error fetching coin data:", error));
