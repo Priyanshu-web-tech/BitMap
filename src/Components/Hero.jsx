@@ -1,11 +1,17 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   return (
     <div className="relative w-full">
       <div className="relative isolate z-0 bg-black text-white px-6 pt-14 lg:px-8">
         <div className="relative mx-auto max-w-2xl py-24">
-          <div className="absolute inset-x-0 -top-[4rem] -z-10 transform-gpu overflow-hidden blur-3xl md:-top-[10rem]">
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="absolute inset-x-0 -top-[4rem] -z-10 transform-gpu overflow-hidden blur-3xl md:-top-[10rem]"
+          >
             <svg
               className="relative left-[calc(50%-11rem)] -z-10 h-[21.1875rem] max-w-none -translate-x-1/2 rotate-[30deg] sm:left-[calc(50%-30rem)] sm:h-[42.375rem]"
               viewBox="0 0 1155 678"
@@ -30,8 +36,13 @@ const Hero = () => {
                 </linearGradient>
               </defs>
             </svg>
-          </div>
-          <div className="text-center">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="text-center"
+          >
             <h1 className="text-4xl font-bold tracking-tight text-yellow-500 sm:text-6xl">
               Welcome to the world of cryptocurrency
             </h1>
@@ -48,7 +59,7 @@ const Hero = () => {
                 </button>
               </a>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </div>
